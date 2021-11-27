@@ -1,23 +1,12 @@
 import React from 'react';
-import {
-  Tooltip,
-  Button,
-  Avatar,
-  Select,
-  Typography,
-  Dropdown,
-  Menu,
-  Space,
-} from '@arco-design/web-react';
+import { Tooltip, Button, Avatar, Typography, Dropdown, Menu, Space } from '@arco-design/web-react';
 import { IconSunFill, IconMoonFill } from '@arco-design/web-react/icon';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReducerState } from '../../redux';
 import useLocale from '../../utils/useLocale';
 import Logo from '../../assets/logo.svg';
 import history from '../../history';
-
 import MessageBox from '../MessageBox';
-
 import styles from './style/index.module.less';
 
 function Navbar() {
@@ -41,9 +30,9 @@ function Navbar() {
     <div className={styles.navbar}>
       <div className={styles.left}>
         <Space size={8}>
-          <Logo />
+          <Logo style={{ width: 30 }} />
           <Typography.Title style={{ margin: 0, fontSize: 18 }} heading={5}>
-            Arco Design Pro
+            Family Local life
           </Typography.Title>
         </Space>
       </div>
@@ -53,25 +42,6 @@ function Navbar() {
         </li>
         <li>
           <a>{locale['navbar.docs']}</a>
-        </li>
-        <li>
-          <Select
-            options={[
-              { label: '中文', value: 'zh-CN' },
-              { label: 'English', value: 'en-US' },
-            ]}
-            value={localStorage.getItem('arco-lang')}
-            bordered={false}
-            triggerProps={{
-              autoAlignPopupWidth: false,
-              autoAlignPopupMinWidth: true,
-              position: 'bl',
-            }}
-            onChange={(value) => {
-              localStorage.setItem('arco-lang', value);
-              window.location.reload();
-            }}
-          />
         </li>
         <li>
           <Tooltip

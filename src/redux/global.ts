@@ -32,7 +32,7 @@ const initialState: GlobalState = {
   userInfo: null,
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case 'toggle-theme': {
       const { theme } = action.payload;

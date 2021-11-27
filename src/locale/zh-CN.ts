@@ -1,4 +1,3 @@
-import localeSettings from './zh-CN/settings';
 import localeMessageBox from '../components/MessageBox/locale/zh-CN';
 import localeWorkplace from '../pages/workplace/locale/zh-CN';
 import localeSearchTable from '../pages/search-table/locale/zh-CN';
@@ -16,10 +15,12 @@ import localeUserInfo from '../pages/user-info/locale/zh-CN';
 import localeUserSetting from '../pages/user-setting/locale/zh-CN';
 import localeMonitor from '../pages/monitor/locale/zh-CN';
 import localeBasicProfile from '../pages/basic-profile/locale/zh-CN';
+import localLoan from '../pages/Loan/local/zh-CN';
 
 export default {
   'menu.dashboard': '仪表盘',
   'menu.list': '列表页',
+  'menu.loan': '借贷管理',
   'menu.result': '结果页',
   'menu.exception': '异常页',
   'menu.form': '表单页',
@@ -27,8 +28,8 @@ export default {
   'menu.visualization': '数据可视化',
   'menu.user': '个人中心',
   'navbar.docs': '文档中心',
-  ...localeSettings,
   ...localeMessageBox,
+  ...localLoan,
   ...localeWorkplace,
   ...localeSearchTable,
   ...localeSuccess,

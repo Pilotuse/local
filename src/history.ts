@@ -11,7 +11,7 @@
 import { createBrowserHistory } from 'history';
 
 const HISTORY = createBrowserHistory({
-  basename: '/pro/preview',
+  basename: '/',
 });
 
 export default HISTORY;
