@@ -42,10 +42,6 @@ function DetailTable() {
       dataIndex: 'deviceId',
     },
     {
-      title: locale['menu.snkrs.nickname'],
-      dataIndex: 'system',
-    },
-    {
       title: locale['menu.snkrs.model'],
       dataIndex: 'system',
     },

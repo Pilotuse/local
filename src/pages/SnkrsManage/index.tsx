@@ -1,8 +1,10 @@
 import React from 'react';
 import { Grid, Statistic, Tag, Breadcrumb, Typography, Space } from '@arco-design/web-react';
+import { IconArrowRise } from '@arco-design/web-react/icon';
 import DetailTable from './DetailTable';
 import DetailCharts from './DetailCharts';
 import DrawerBox from './DrawerBox';
+import Modalconfirm from './Modalconfirm';
 import useLocale from '../../utils/useLocale';
 import styles from './index.module.less';
 
@@ -79,6 +81,7 @@ const Loan = () => {
   // 球鞋详情布局
   // 购买价格服务 ： 购买总件数  购买总价格  最高单价  最低单价  平均价格  购买周期
   const locale = useLocale();
+
   return (
     <div className={styles.container}>
       <Breadcrumb style={{ marginBottom: 16 }}>
@@ -87,8 +90,17 @@ const Loan = () => {
       <div className={styles.wrapper}>
         <Space direction="vertical" size={24} style={{ width: '100%' }}>
           <>
-            <Typography.Title style={{ marginTop: 0, marginBottom: 12, fontSize: 14 }} heading={6}>
+            <Typography.Title
+              style={{
+                marginTop: 0,
+                marginBottom: 12,
+                fontSize: 14,
+              }}
+              heading={6}
+            >
               球鞋看板
+              <Modalconfirm title="每日推荐" />
+              <Modalconfirm title="球鞋洗护" />
             </Typography.Title>
             <Col span={24} className={styles['snkrs-kanban']}>
               <Row>
@@ -112,6 +124,7 @@ const Loan = () => {
                         countUp={data.countUp}
                         value={data.value ? data.value : '-'}
                         suffix={data.suffix}
+                        prefix={<IconArrowRise style={{ color: 'red' }} />}
                       />
                     </Col>
                   );

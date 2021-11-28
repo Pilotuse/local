@@ -29,6 +29,11 @@ export interface GlobalState {
     title?: string;
     children: React.FC | null;
   };
+  modalConfirm: {
+    status: boolean;
+    title?: string;
+    children: React.FC | null;
+  };
 }
 
 const initialState: GlobalState = {
@@ -36,6 +41,11 @@ const initialState: GlobalState = {
   settings: defaultSettings,
   userInfo: null,
   drawerVisible: {
+    status: false,
+    title: '',
+    children: null,
+  },
+  modalConfirm: {
     status: false,
     title: '',
     children: null,
@@ -75,6 +85,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         drawerVisible,
+      };
+    }
+    case 'update-modalConfirm': {
+      const { modalConfirm } = action.payload;
+      return {
+        ...state,
+        modalConfirm,
       };
     }
     default:
