@@ -6,7 +6,9 @@ import {
   // IconExclamationCircle,
   // IconSettings,
   // IconFile,
-  // IconApps,
+  IconApps,
+  IconStorage,
+  IconThunderbolt,
   IconArchive,
   IconUser,
 } from '@arco-design/web-react/icon';
@@ -15,7 +17,7 @@ export const defaultRoute = 'dashboard/workplace';
 
 export const routes = [
   {
-    name: 'menu.dashboard',
+    name: 'menu.dashboard.workplace',
     key: 'dashboard',
     icon: <IconDashboard />,
     children: [
@@ -24,11 +26,11 @@ export const routes = [
         key: 'dashboard/workplace',
         componentPath: 'workplace',
       },
-      {
-        name: 'menu.dashboard.monitor',
-        key: 'dashboard/monitor',
-        componentPath: 'monitor',
-      },
+      // {
+      //   name: 'menu.dashboard.monitor',
+      //   key: 'dashboard/monitor',
+      //   componentPath: 'monitor',
+      // },
     ],
   },
   // {
@@ -70,6 +72,18 @@ export const routes = [
       },
     ],
   },
+  {
+    name: 'menu.snkrs',
+    key: 'snkrs',
+    icon: <IconStorage />,
+    componentPath: 'SnkrsManage',
+  },
+  {
+    name: 'menu.electronic',
+    key: 'electronic',
+    icon: <IconThunderbolt />,
+    componentPath: 'Electronic',
+  },
   // {
   //   name: 'menu.form',
   //   key: 'form',
@@ -99,23 +113,23 @@ export const routes = [
   //     },
   //   ],
   // },
-  // {
-  //   name: 'menu.visualization',
-  //   key: 'visualization',
-  //   icon: <IconApps />,
-  //   children: [
-  //     {
-  //       name: 'menu.visualization.dataAnalysis',
-  //       key: 'visualization/data-analysis',
-  //       componentPath: 'data-analysis',
-  //     },
-  //     {
-  //       name: 'menu.visualization.multiDimensionDataAnalysis',
-  //       key: 'visualization/multi-dimension-data-analysis',
-  //       componentPath: 'multi-dimension-data-analysis',
-  //     },
-  //   ],
-  // },
+  {
+    name: 'menu.visualization',
+    key: 'visualization',
+    icon: <IconApps />,
+    children: [
+      {
+        name: 'menu.visualization.dataAnalysis',
+        key: 'visualization/data-analysis',
+        componentPath: 'data-analysis',
+      },
+      {
+        name: 'menu.visualization.multiDimensionDataAnalysis',
+        key: 'visualization/multi-dimension-data-analysis',
+        componentPath: 'multi-dimension-data-analysis',
+      },
+    ],
+  },
   // {
   //   name: 'menu.result',
   //   key: 'result',
@@ -165,11 +179,11 @@ export const routes = [
         key: 'user/info',
         componentPath: 'user-info',
       },
-      {
-        name: 'menu.user.setting',
-        key: 'user/setting',
-        componentPath: 'user-setting',
-      },
+      // {
+      //   name: 'menu.user.setting',
+      //   key: 'user/setting',
+      //   componentPath: 'user-setting',
+      // },
     ],
   },
 ];

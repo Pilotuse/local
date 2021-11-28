@@ -56,6 +56,7 @@ function UserInfo() {
       <Breadcrumb style={{ marginBottom: 20 }}>
         <Breadcrumb.Item>{locale['menu.user']}</Breadcrumb.Item>
         <Breadcrumb.Item>{locale['menu.user.setting']}</Breadcrumb.Item>
+        <Breadcrumb.Item>12312</Breadcrumb.Item>
       </Breadcrumb>
       <div className={styles.wrapper}>
         <div className={styles.sidebar}>

@@ -41,9 +41,6 @@ function Navbar() {
           <MessageBox />
         </li>
         <li>
-          <a>{locale['navbar.docs']}</a>
-        </li>
-        <li>
           <Tooltip
             content={
               theme === 'light'

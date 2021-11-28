@@ -24,12 +24,22 @@ export interface GlobalState {
     location?: string;
     email?: string;
   };
+  drawerVisible: {
+    status: boolean;
+    title?: string;
+    children: React.FC | null;
+  };
 }
 
 const initialState: GlobalState = {
   theme: defaultTheme,
   settings: defaultSettings,
   userInfo: null,
+  drawerVisible: {
+    status: false,
+    title: '',
+    children: null,
+  },
 };
 
 export default function(state = initialState, action) {
@@ -58,6 +68,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         userInfo,
+      };
+    }
+    case 'update-drawerVisible': {
+      const { drawerVisible } = action.payload;
+      return {
+        ...state,
+        drawerVisible,
       };
     }
     default:

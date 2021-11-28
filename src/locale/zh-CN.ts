@@ -16,11 +16,13 @@ import localeUserSetting from '../pages/user-setting/locale/zh-CN';
 import localeMonitor from '../pages/monitor/locale/zh-CN';
 import localeBasicProfile from '../pages/basic-profile/locale/zh-CN';
 import localLoan from '../pages/Loan/local/zh-CN';
+import SnkrsManage from '../pages/SnkrsManage/local/zh-CN';
+import Electronic from '../pages/Electronic/local/zh-CN';
 
 export default {
   'menu.dashboard': '仪表盘',
   'menu.list': '列表页',
-  'menu.loan': '借贷管理',
+  'menu.loan': '借贷',
   'menu.result': '结果页',
   'menu.exception': '异常页',
   'menu.form': '表单页',
@@ -28,6 +30,7 @@ export default {
   'menu.visualization': '数据可视化',
   'menu.user': '个人中心',
   'navbar.docs': '文档中心',
+  'menu.electronic': '电子产品',
   ...localeMessageBox,
   ...localLoan,
   ...localeWorkplace,
@@ -46,4 +49,6 @@ export default {
   ...localeUserSetting,
   ...localeMonitor,
   ...localeBasicProfile,
+  ...SnkrsManage,
+  ...Electronic,
 };
