@@ -21,7 +21,7 @@ const data = Mock.mock({
 
 setupMock({
   setup() {
-    Mock.mock(new RegExp('/api/policy'), (params) => {
+    Mock.mock(new RegExp('/api/policy'), params => {
       const { page = 1, pageSize = 10 } = qs.parseUrl(params.url).query;
       const p = page as number;
       const ps = pageSize as number;

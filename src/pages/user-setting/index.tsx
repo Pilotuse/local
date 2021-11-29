@@ -43,7 +43,7 @@ function UserInfo() {
 
   function renderContent() {
     const curSelectedKey = selectedKeys[0];
-    const curSelectedMenu = menuList.find((item) => item.key === curSelectedKey);
+    const curSelectedMenu = menuList.find(item => item.key === curSelectedKey);
     return curSelectedMenu ? curSelectedMenu.component : null;
   }
 
@@ -61,7 +61,7 @@ function UserInfo() {
       <div className={styles.wrapper}>
         <div className={styles.sidebar}>
           <Menu mode="vertical" selectedKeys={selectedKeys} onClickMenuItem={onClickMenuItem}>
-            {menuList.map((menu) => (
+            {menuList.map(menu => (
               <Menu.Item key={menu.key}>{menu.title}</Menu.Item>
             ))}
           </Menu>

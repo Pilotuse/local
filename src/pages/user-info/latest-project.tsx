@@ -9,7 +9,7 @@ export default function LatestActivity() {
   const [projectList, setProjectList] = useState([]);
 
   function fetchProjectList() {
-    axios.get('/api/user/latestProjectList').then((res) => {
+    axios.get('/api/user/latestProjectList').then(res => {
       setProjectList(res.data || []);
     });
   }
@@ -27,7 +27,7 @@ export default function LatestActivity() {
         <Link>{locale['userInfo.showMore']}</Link>
       </div>
       <div className={styles['latest-project-list']}>
-        {projectList.map((project) => (
+        {projectList.map(project => (
           <div
             key={project.id}
             className={styles['latest-project-item']}

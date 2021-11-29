@@ -28,6 +28,7 @@ export interface GlobalState {
     status: boolean;
     title?: string;
     children: React.FC | null;
+    componentData: any;
   };
   modalConfirm: {
     status: boolean;
@@ -44,6 +45,7 @@ const initialState: GlobalState = {
     status: false,
     title: '',
     children: null,
+    componentData: {},
   },
   modalConfirm: {
     status: false,

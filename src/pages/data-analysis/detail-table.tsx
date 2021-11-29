@@ -13,7 +13,9 @@ function DetailTable() {
     page: 1,
     pageSize: 10,
     roomNumber: '#3032',
-    startTime: dayjs(new Date()).subtract(1, 'day').format('YYYY-MM-DD'),
+    startTime: dayjs(new Date())
+      .subtract(1, 'day')
+      .format('YYYY-MM-DD'),
     endTime: dayjs(new Date()).format('YYYY-MM-DD'),
   });
   const [tableData, setTableData] = useState({ list: [], total: 0 });
@@ -45,13 +47,13 @@ function DetailTable() {
     },
   ];
 
-  const search = (params) => {
+  const search = params => {
     setLoading(true);
     axios
       .get('/api/feedbackList', {
         params,
       })
-      .then((res) => {
+      .then(res => {
         setTableData(res.data);
       })
       .finally(() => {
@@ -59,7 +61,7 @@ function DetailTable() {
       });
   };
 
-  const formatFormValues = (values) => {
+  const formatFormValues = values => {
     const time = values.time || [];
 
     return {
@@ -70,7 +72,7 @@ function DetailTable() {
   };
 
   const onFormChange = (_value, values) => {
-    setSearchParams((params) => ({
+    setSearchParams(params => ({
       ...params,
       ...formatFormValues(values),
       page: 1,
@@ -78,7 +80,7 @@ function DetailTable() {
   };
 
   const onTableChange = ({ current, pageSize }) => {
-    setSearchParams((params) => ({
+    setSearchParams(params => ({
       ...params,
       page: current,
       pageSize,

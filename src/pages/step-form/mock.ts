@@ -62,7 +62,7 @@ setupMock({
     });
 
     // 线路
-    Mock.mock(new RegExp('/api/lineList'), (params) => {
+    Mock.mock(new RegExp('/api/lineList'), params => {
       const { cluster } = qs.parseUrl(params.url).query;
       let res = [];
       if (cluster) {

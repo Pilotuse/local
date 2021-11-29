@@ -26,7 +26,7 @@ function Index() {
   }
 
   function fetchUserInfo() {
-    axios.get('/api/user/userInfo').then((res) => {
+    axios.get('/api/user/userInfo').then(res => {
       store.dispatch({
         type: 'update-userInfo',
         payload: { userInfo: res.data },

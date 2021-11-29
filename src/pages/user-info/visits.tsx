@@ -10,7 +10,7 @@ export default function LatestActivity() {
   const [visitsList, setVisitsList] = useState([]);
 
   function fetchVisitsList() {
-    axios.get('/api/user/visits').then((res) => {
+    axios.get('/api/user/visits').then(res => {
       setVisitsList(res.data || []);
     });
   }
@@ -22,7 +22,7 @@ export default function LatestActivity() {
   return (
     <div>
       <Space size={12}>
-        {visitsList.map((visits) => (
+        {visitsList.map(visits => (
           <Card key={visits.name} bordered={false} className={styles['visits-item']}>
             <Statistic
               groupSeparator

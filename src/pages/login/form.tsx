@@ -32,7 +32,7 @@ export default function LoginForm() {
     setLoading(true);
     axios
       .post('/api/user/login', params)
-      .then((res) => {
+      .then(res => {
         const { status, msg } = res.data;
         if (status === 'ok') {
           afterLoginSuccess(params);
@@ -46,7 +46,7 @@ export default function LoginForm() {
   }
 
   function onSubmitClick() {
-    formRef.current.validate().then((values) => {
+    formRef.current.validate().then(values => {
       login(values);
     });
   }

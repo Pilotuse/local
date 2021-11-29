@@ -38,7 +38,7 @@ export default function Info() {
   }
 
   function onSaveBtnClick() {
-    formRef.current.validate().then((values) => {
+    formRef.current.validate().then(values => {
       save({
         ...values,
         avatar,

@@ -25,7 +25,7 @@ const Content = Layout.Content;
 function getFlattenRoutes() {
   const res = [];
   function travel(_routes) {
-    _routes.forEach((route) => {
+    _routes.forEach(route => {
       if (route.componentPath) {
         route.component = lazyload(() => import(`../pages/${route.componentPath}`));
         res.push(route);
@@ -41,7 +41,7 @@ function getFlattenRoutes() {
 function renderRoutes(locale) {
   const nodes = [];
   function travel(_routes, level) {
-    return _routes.map((route) => {
+    return _routes.map(route => {
       const titleDom = (
         <>
           {route.icon} {locale[route.name] || route.name}
@@ -103,7 +103,7 @@ function PageLayout() {
   const flattenRoutes = useMemo(() => getFlattenRoutes() || [], []);
 
   function onClickMenuItem(key) {
-    const currentRoute = flattenRoutes.find((r) => r.key === key);
+    const currentRoute = flattenRoutes.find(r => r.key === key);
     const component = currentRoute.component;
     const preload = component.preload();
     loadingBarRef.current.loading();
@@ -115,7 +115,7 @@ function PageLayout() {
   }
 
   function toggleCollapse() {
-    setCollapsed((collapsed) => !collapsed);
+    setCollapsed(collapsed => !collapsed);
   }
 
   const paddingLeft = showMenu ? { paddingLeft: menuWidth } : {};

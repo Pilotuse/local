@@ -26,7 +26,7 @@ function BasicProfile() {
     setLoading(true);
     axios
       .get('/api/basicProfile')
-      .then((res) => {
+      .then(res => {
         setData(res.data || {});
       })
       .finally(() => {
@@ -38,7 +38,7 @@ function BasicProfile() {
     setPreLoading(true);
     axios
       .get('/api/basicProfile')
-      .then((res) => {
+      .then(res => {
         setPreData(res.data || {});
       })
       .finally(() => {

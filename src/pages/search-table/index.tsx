@@ -31,7 +31,7 @@ function SearchTable() {
     {
       title: locale['searchTable.columns.workflow'],
       dataIndex: 'workflow',
-      render: (value) => <Typography.Text copyable>{value}</Typography.Text>,
+      render: value => <Typography.Text copyable>{value}</Typography.Text>,
     },
     {
       title: locale['searchTable.columns.period'],
@@ -88,7 +88,7 @@ function SearchTable() {
           ...params,
         },
       })
-      .then((res) => {
+      .then(res => {
         dispatch({ type: UPDATE_LIST, payload: { data: res.data.list } });
         dispatch({
           type: UPDATE_PAGINATION,

@@ -26,9 +26,9 @@ export default () => {
 
   useEffect(() => {
     const feas = worldJSON.features
-      .filter((feat) => feat.properties.name)
-      .map((v) => {
-        const featValue = data.find((i) => i.name === v.properties.name);
+      .filter(feat => feat.properties.name)
+      .map(v => {
+        const featValue = data.find(i => i.name === v.properties.name);
         return featValue
           ? {
               ...v,
@@ -81,7 +81,7 @@ export default () => {
           position="x*y"
           color={[
             'properties',
-            (feat) => {
+            feat => {
               return feat.value ? '#6395f9' : '#fff';
             },
           ]}

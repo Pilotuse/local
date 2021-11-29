@@ -39,7 +39,7 @@ export default () => {
           label={[
             'value',
             {
-              content: (item) => `${item.value}%`,
+              content: item => `${item.value}%`,
               position: 'middle',
               offset: '-25%',
               labelLine: false,

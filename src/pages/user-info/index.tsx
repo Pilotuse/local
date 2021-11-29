@@ -42,7 +42,7 @@ function UserInfo() {
       <div className={styles.content}>
         <div className={styles['content-left']}>
           <Tabs>
-            {tabList.map((tab) => (
+            {tabList.map(tab => (
               <Tabs.TabPane
                 key={tab.key}
                 title={

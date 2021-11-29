@@ -9,7 +9,7 @@ export default <T>(url: string, defaultValue: T[]): [boolean, T[]] => {
     setLoading(true);
     axios
       .get(url)
-      .then((res) => {
+      .then(res => {
         setData(res.data);
       })
       .finally(() => {

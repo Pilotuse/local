@@ -29,11 +29,11 @@ export default (props: DataChainGrowthItemProps) => {
   const { title, quota, chartType } = props;
   const ChartComponent = chartType === 'line' ? Line : Interval;
 
-  const fetchData = (params) => {
+  const fetchData = params => {
     setLoading(true);
     axios
       .get(`/api/dataChainGrowth`, { params })
-      .then((res) => {
+      .then(res => {
         setData(res.data);
       })
       .finally(() => {

@@ -5,7 +5,8 @@ import useLocale from '../../utils/useLocale';
 import styles from './style/index.module.less';
 
 const dataSource = new Array(3).fill({
-  avatar: '//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp',
+  avatar:
+    '//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp',
   title: 'Beijing Bytedance Technology Co., Ltd.',
   description: 'Beijing ByteDance Technology Co., Ltd. is an enterprise located in China.',
 });

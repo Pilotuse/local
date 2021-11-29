@@ -20,7 +20,7 @@ function StepForm() {
   const fetchData = () => {
     axios
       .get('/api/stepForm')
-      .then((res) => {
+      .then(res => {
         dispatch({ type: UPDATE_FORM, payload: { data: res.data || {} } });
       })
       .finally(() => {

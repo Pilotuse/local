@@ -24,7 +24,7 @@ function LoadingComponent(props) {
   );
 }
 
-export default (loader) =>
+export default loader =>
   load(loader, {
     fallback: LoadingComponent({
       pastDelay: true,

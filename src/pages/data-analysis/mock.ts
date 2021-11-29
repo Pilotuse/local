@@ -5,7 +5,7 @@ import setupMock from '../../utils/setupMock';
 setupMock({
   setup() {
     Mock.mock(new RegExp('/api/reportStuckRate'), () => {
-      const getLineData = (name) => {
+      const getLineData = name => {
         return new Array(12).fill(0).map((_item, index) => ({
           x: `${index * 2}时`,
           y: Mock.Random.natural(0, 100),
@@ -15,8 +15,8 @@ setupMock({
       return [...getLineData('A类型'), ...getLineData('B类型')];
     });
 
-    Mock.mock(new RegExp('/api/feedbackList'), (params) => {
-      const { page = 1, pageSize = 10 } = qs.parseUrl(params.url).query as unknown as {
+    Mock.mock(new RegExp('/api/feedbackList'), params => {
+      const { page = 1, pageSize = 10 } = (qs.parseUrl(params.url).query as unknown) as {
         page: number;
         pageSize: number;
         roomNumber: string;

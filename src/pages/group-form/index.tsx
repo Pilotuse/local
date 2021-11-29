@@ -38,7 +38,7 @@ function GroupForm() {
   }
 
   function onSubmitClick() {
-    formRef.current.validate().then((values) => {
+    formRef.current.validate().then(values => {
       submit(values);
     });
   }

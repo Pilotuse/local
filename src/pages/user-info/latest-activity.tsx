@@ -9,7 +9,7 @@ export default function LatestActivity() {
   const [activityList, setActivityList] = useState([]);
 
   function fetchActivityList() {
-    axios.get('/api/user/latestActivity').then((res) => {
+    axios.get('/api/user/latestActivity').then(res => {
       setActivityList(res.data || []);
     });
   }
@@ -26,7 +26,7 @@ export default function LatestActivity() {
       </div>
       <List
         dataSource={activityList}
-        render={(activity) => (
+        render={activity => (
           <List.Item key={activity.id} actionLayout="horizontal">
             <List.Item.Meta
               avatar={

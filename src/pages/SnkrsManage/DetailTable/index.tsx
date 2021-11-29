@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import { IconDownload, IconUpload } from '@arco-design/web-react/icon';
 import { useDispatch } from 'react-redux';
 import useLocale from '../../../utils/useLocale';
+import SnkrsDrawerForm from '../components/SnkrsDrawerForm';
 
 function DetailTable() {
   const locale = useLocale();
@@ -66,7 +67,7 @@ function DetailTable() {
               type="text"
               onClick={() => {
                 // eslint-disable-next-line no-use-before-define
-                addSnkrs('球鞋详情');
+                addSnkrs({ title: '球鞋详情' });
               }}
             >
               {locale['menu.watch']}
@@ -75,14 +76,15 @@ function DetailTable() {
               type="text"
               onClick={() => {
                 // eslint-disable-next-line no-use-before-define
-                addSnkrs(`球鞋${locale['menu.change']}`);
+                addSnkrs({ title: `${locale['menu.add']}球鞋`, children: <SnkrsAdd /> });
               }}
             >
               {locale['menu.change']}
             </Button>
             <Popconfirm
               title="确认删除本条数据？删除后无法恢复！"
-              onOk={() => {
+              onOk={(col, record) => {
+                console.log(col, record)
                 Message.info({ content: 'ok' });
               }}
               onCancel={() => {
@@ -97,13 +99,13 @@ function DetailTable() {
     },
   ];
 
-  const search = (params) => {
+  const search = params => {
     setLoading(true);
     axios
       .get('/api/feedbackList', {
         params,
       })
-      .then((res) => {
+      .then(res => {
         setTableData(res.data);
       })
       .finally(() => {
@@ -111,7 +113,7 @@ function DetailTable() {
       });
   };
 
-  const formatFormValues = (values) => {
+  const formatFormValues = values => {
     const time = values.time || [];
 
     return {
@@ -122,7 +124,7 @@ function DetailTable() {
   };
 
   const onFormChange = (_value, values) => {
-    setSearchParams((params) => ({
+    setSearchParams(params => ({
       ...params,
       ...formatFormValues(values),
       page: 1,
@@ -130,7 +132,7 @@ function DetailTable() {
   };
 
   const onTableChange = ({ current, pageSize }) => {
-    setSearchParams((params) => ({
+    setSearchParams(params => ({
       ...params,
       page: current,
       pageSize,
@@ -141,17 +143,23 @@ function DetailTable() {
     search(searchParams);
   }, [searchParams]);
 
-  const addSnkrs = (title?: string) => {
+  const addSnkrs = (props: { title: string; children?: React.ReactNode; componentData?: any }) => {
+    const { title, children, componentData } = props;
     dispatch({
       type: 'update-drawerVisible',
       payload: {
         drawerVisible: {
           title,
           status: true,
-          children: null,
+          children,
+          componentData,
         },
       },
     });
+  };
+
+  const SnkrsAdd = () => {
+    return <SnkrsDrawerForm />;
   };
 
   return (
@@ -174,7 +182,7 @@ function DetailTable() {
                 placeholder="请选择"
                 showSearch
                 style={{ width: 180 }}
-                onChange={(value) =>
+                onChange={value =>
                   Message.info({ content: `You select ${value}.`, showIcon: true })
                 }
               />
@@ -185,7 +193,11 @@ function DetailTable() {
           </Form>
         </Grid.Col>
         <Grid.Col span={4} style={{ textAlign: 'right' }}>
-          <Button type="text" icon={<IconUpload />} onClick={() => addSnkrs(locale['menu.add'])}>
+          <Button
+            type="text"
+            icon={<IconUpload />}
+            onClick={() => addSnkrs({ title: `${locale['menu.add']}球鞋`, children: <SnkrsAdd /> })}
+          >
             {locale['menu.add']}
           </Button>
           <Button type="text" icon={<IconDownload />}>

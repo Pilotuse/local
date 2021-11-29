@@ -7,7 +7,7 @@ export default function OtherList() {
   const [list, setList] = useState([]);
 
   function fetchList() {
-    axios.get('/api/user/projectAndTeamList').then((res) => {
+    axios.get('/api/user/projectAndTeamList').then(res => {
       setList(res.data || []);
     });
   }
@@ -19,7 +19,7 @@ export default function OtherList() {
   return (
     <div className={styles['other-wrapper']}>
       <List bordered={false}>
-        {list.map((item) => (
+        {list.map(item => (
           <List.Item key={item.id}>
             <Typography.Text>{item.content}</Typography.Text>
           </List.Item>

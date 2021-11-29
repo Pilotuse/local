@@ -43,7 +43,7 @@ function Service() {
       .then(() => {
         dispatch({ type: GO_NEXT });
       })
-      .catch((error) => {
+      .catch(error => {
         Message.error(error.message);
       });
   };

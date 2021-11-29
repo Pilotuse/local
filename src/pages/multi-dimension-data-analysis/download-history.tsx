@@ -15,7 +15,12 @@ export default () => {
   const locale = useLocale();
   const chartTheme = useChartTheme();
   const [searchParams, setSearchParams] = useState({
-    time: [dayjs().subtract(1, 'day').format(DATE_FORMAT), dayjs().format(DATE_FORMAT)],
+    time: [
+      dayjs()
+        .subtract(1, 'day')
+        .format(DATE_FORMAT),
+      dayjs().format(DATE_FORMAT),
+    ],
     showCompetitor: false,
   });
   const [data, setData] = useState([]);
@@ -32,7 +37,7 @@ export default () => {
           endTime: time[1],
         },
       })
-      .then((res) => {
+      .then(res => {
         setData(res.data);
       })
       .finally(() => {
@@ -71,7 +76,7 @@ export default () => {
         <Chart autoFit height={228} data={data} theme={chartTheme} style={{ paddingTop: 20 }}>
           <Line position="x*y" color="name" />
           <Axis name="x" />
-          <Axis name="y" label={{ formatter: (val) => `${+val / 1000}K` }} />
+          <Axis name="y" label={{ formatter: val => `${+val / 1000}K` }} />
           <Point position="x*y" shape="circle" color="name" />
           <Tooltip shared showCrosshairs />
           <Legend />

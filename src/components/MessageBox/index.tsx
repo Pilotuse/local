@@ -25,7 +25,7 @@ function DropContent() {
     showLoading && setLoading(true);
     axios
       .get('/api/message/list')
-      .then((res) => {
+      .then(res => {
         setSourceData(res.data);
       })
       .finally(() => {
@@ -34,7 +34,7 @@ function DropContent() {
   }
 
   function readMessage(data: MessageListType) {
-    const ids = data.map((item) => item.id);
+    const ids = data.map(item => item.id);
     axios
       .post('/api/message/read', {
         ids,
@@ -79,10 +79,10 @@ function DropContent() {
   return (
     <Spin loading={loading} style={{ width: '100%' }}>
       <Tabs type="rounded" defaultActiveTab="message" destroyOnHide>
-        {tabList.map((item) => {
+        {tabList.map(item => {
           const { key, title, titleIcon, avatar } = item;
           const data = groupData[key] || [];
-          const unReadData = data.filter((item) => !item.status);
+          const unReadData = data.filter(item => !item.status);
           return (
             <Tabs.TabPane
               key={key}
@@ -98,10 +98,10 @@ function DropContent() {
                 data={data}
                 unReadData={unReadData}
                 avatar={avatar}
-                onItemClick={(item) => {
+                onItemClick={item => {
                   readMessage([item]);
                 }}
-                onAllBtnClick={(unReadData) => {
+                onAllBtnClick={unReadData => {
                   readMessage(unReadData);
                 }}
               />

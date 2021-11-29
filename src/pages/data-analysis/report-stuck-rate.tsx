@@ -13,7 +13,7 @@ function ReportStuckRate() {
     setLoading(true);
     axios
       .get('/api/reportStuckRate', { params })
-      .then((res) => {
+      .then(res => {
         setData(res.data || {});
       })
       .finally(() => {
@@ -30,7 +30,7 @@ function ReportStuckRate() {
       <Chart autoFit height={229} data={data} theme={chartTheme}>
         <Line position="x*y" color="name" />
         <Axis name="x" />
-        <Axis name="y" label={{ formatter: (val) => `${val}%` }} />
+        <Axis name="y" label={{ formatter: val => `${val}%` }} />
         <Point position="x*y" shape="circle" color="name" />
         <Tooltip shared showCrosshairs />
         <Legend />

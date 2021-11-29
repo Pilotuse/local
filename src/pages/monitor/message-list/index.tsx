@@ -11,7 +11,7 @@ export default function MessageList(props: MessageListProps) {
   const { data } = props;
   return (
     <div className={styles['message-list']}>
-      {data.map((item) => (
+      {data.map(item => (
         <MessageItem key={item.id} data={item} />
       ))}
       {!data.length && <Result status="404" />}

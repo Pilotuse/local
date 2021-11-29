@@ -30,19 +30,19 @@ function BaseInfo() {
   const [lineOptions, setLineOptions] = useState([]);
 
   const fetchClusterOptions = () => {
-    axios.get(`/api/clusterList`).then((res) => {
+    axios.get(`/api/clusterList`).then(res => {
       setClusterOptions(res.data || []);
     });
   };
 
-  const fetchLineOptions = (cluster) => {
+  const fetchLineOptions = cluster => {
     axios
       .get('/api/lineList', {
         params: {
           cluster,
         },
       })
-      .then((res) => {
+      .then(res => {
         setLineOptions(res.data || []);
         // 默认选中第一个
         if (!data.lineName && res.data.length && formRef.current) {
@@ -55,7 +55,7 @@ function BaseInfo() {
     dispatch({ type: UPDATE_ACTIVE_KEYS, payload: { activeKeys } });
   };
 
-  const onClusterChange = (value) => {
+  const onClusterChange = value => {
     const cluster = Array.isArray(value) && value[value.length - 1];
     if (formRef.current) {
       formRef.current.setFieldValue('lineName', undefined);
@@ -148,7 +148,7 @@ function BaseInfo() {
             </Form.Item>
             <Form.Item label={locale['stepForm.form.label.lineName']} field="lineName">
               <Select placeholder={locale['stepForm.placeholder.lineName']}>
-                {lineOptions.map((option) => (
+                {lineOptions.map(option => (
                   <Select.Option value={option.value} key={`${option.value}`}>
                     {option.label}
                   </Select.Option>

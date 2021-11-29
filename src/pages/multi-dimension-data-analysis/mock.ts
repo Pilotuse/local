@@ -6,7 +6,7 @@ setupMock({
   setup() {
     Mock.mock(new RegExp('/api/dataChainGrowth'), () => {
       const year = new Date().getFullYear();
-      const getLineData = (name) => {
+      const getLineData = name => {
         return new Array(12).fill(0).map((_item, index) => ({
           x: `${index + 1}月`,
           y: Mock.Random.natural(0, 100),
@@ -20,14 +20,14 @@ setupMock({
       };
     });
 
-    Mock.mock(new RegExp('/api/downloadHistory'), (params) => {
-      const { showCompetitor } = qs.parseUrl(params.url).query as unknown as {
+    Mock.mock(new RegExp('/api/downloadHistory'), params => {
+      const { showCompetitor } = (qs.parseUrl(params.url).query as unknown) as {
         roomNumber: string;
         startTime: string;
         showCompetitor: string;
       };
       const year = new Date().getFullYear();
-      const getLineData = (name) => {
+      const getLineData = name => {
         return new Array(12).fill(0).map((_item, index) => ({
           x: `${year}/${index + 1}`,
           y: Mock.Random.natural(0, 75) * 1000,
