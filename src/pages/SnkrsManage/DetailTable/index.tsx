@@ -35,12 +35,9 @@ function DetailTable() {
 
   const columns = [
     {
-      title: locale['menu.snkrs.table'],
-      dataIndex: 'userId',
-    },
-    {
       title: locale['menu.snkrs.name'],
       dataIndex: 'deviceId',
+      fixed: 'left',
     },
     {
       title: locale['menu.snkrs.model'],
@@ -60,6 +57,8 @@ function DetailTable() {
     },
     {
       title: locale['menu.snkrs.details'],
+      fixed: 'right',
+      width: 212,
       render: () => {
         return (
           <>
@@ -181,14 +180,14 @@ function DetailTable() {
               <Select
                 placeholder="请选择"
                 showSearch
-                style={{ width: 180 }}
+                style={{ width: 170 }}
                 onChange={value =>
                   Message.info({ content: `You select ${value}.`, showIcon: true })
                 }
               />
             </Form.Item>
             <Form.Item label={locale['menu.snkrs.name']} field="name">
-              <Input style={{ width: 180 }} />
+              <Input style={{ width: 170 }} />
             </Form.Item>
           </Form>
         </Grid.Col>
@@ -209,6 +208,7 @@ function DetailTable() {
         rowKey="id"
         loading={loading}
         columns={columns}
+        scroll={{ x: 1200 }}
         data={tableData.list}
         pagination={{
           total: tableData.total,
