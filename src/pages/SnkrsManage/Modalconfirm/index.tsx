@@ -1,21 +1,18 @@
-import { Modal, Alert, Tag } from '@arco-design/web-react';
+import { Modal, Alert } from '@arco-design/web-react';
 import React from 'react';
-import { IconSkin } from '@arco-design/web-react/icon';
 import styles from './index.module.less';
 
 interface Modalconfirm {
   title?: string;
+  visible?: boolean;
+  setVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Modalconfirm = (props: Modalconfirm) => {
-  const { title } = props;
-  const [visible, setVisible] = React.useState(false);
+  const { title, visible, setVisible } = props;
 
   return (
     <div className={styles['snkrs-recommend']}>
-      <Tag size="small" className={styles['snkrs-recommend']} onClick={() => setVisible(true)}>
-        <IconSkin /> {title}
-      </Tag>
       <Modal
         title={title}
         visible={visible}

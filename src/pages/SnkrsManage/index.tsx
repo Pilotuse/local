@@ -5,7 +5,9 @@ import DetailTable from './DetailTable';
 import DetailCharts from './DetailCharts';
 import DrawerBox from './DrawerBox';
 import Modalconfirm from './Modalconfirm';
+import { clone } from 'lodash'
 import useLocale from '../../utils/useLocale';
+import { DEFAULT_COMFIRM, ModalconfirmProps } from './constant';
 import styles from './index.module.less';
 
 const { Row, Col } = Grid;
@@ -81,6 +83,8 @@ const Loan = () => {
   // 球鞋详情布局
   // 购买价格服务 ： 购买总件数  购买总价格  最高单价  最低单价  平均价格  购买周期
   const locale = useLocale();
+  const [visible, setVisible] = React.useState(false);
+  const [modalconfirm, setModalconfirm] = React.useState<ModalconfirmProps>(DEFAULT_COMFIRM);
 
   return (
     <div className={styles.container}>
@@ -99,8 +103,35 @@ const Loan = () => {
               heading={6}
             >
               球鞋看板
-              <Modalconfirm title="每日推荐" />
-              <Modalconfirm title="球鞋洗护" />
+              <Tag
+                size="small"
+                className={styles['snkrs-recommend']}
+                onClick={() => {
+                  const confirm = clone(modalconfirm);
+                  setVisible(true);
+                  setModalconfirm({
+                    ...confirm,
+                    title: '每日推荐',
+                  });
+                }}
+              >
+                每日推荐
+              </Tag>
+              <Tag
+                size="small"
+                className={styles['snkrs-recommend']}
+                onClick={() => {
+                  const confirm = clone(modalconfirm);
+                  setVisible(true);
+                  setModalconfirm({
+                    ...confirm,
+                    title: '球鞋洗护',
+                  });
+                }}
+              >
+                球鞋洗护
+              </Tag>
+              <Modalconfirm {...modalconfirm} visible={visible} setVisible={setVisible} />
             </Typography.Title>
             <Col span={24} className={styles['snkrs-kanban']}>
               <Row>
