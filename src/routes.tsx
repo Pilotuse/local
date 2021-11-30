@@ -76,7 +76,23 @@ export const routes = [
     name: 'menu.snkrs',
     key: 'snkrs',
     icon: <IconStorage />,
-    componentPath: 'SnkrsManage',
+    children: [
+      {
+        name: 'menu.snkrs.manage',
+        key: 'snkrs/manage',
+        componentPath: 'SnkrsManage',
+      },
+      {
+        name: 'menu.snkrs.track',
+        key: 'snkrs/track',
+        componentPath: 'SnkrsTrack',
+      },
+      {
+        name: 'menu.snkrs.washing',
+        key: 'snkrs/washing',
+        componentPath: 'SnkrsWashing',
+      },
+    ],
   },
   {
     name: 'menu.electronic',

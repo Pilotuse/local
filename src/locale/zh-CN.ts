@@ -17,6 +17,8 @@ import localeMonitor from '../pages/monitor/locale/zh-CN';
 import localeBasicProfile from '../pages/basic-profile/locale/zh-CN';
 import localLoan from '../pages/Loan/local/zh-CN';
 import SnkrsManage from '../pages/SnkrsManage/local/zh-CN';
+import localSnkrsTrack from '../pages/SnkrsTrack/local/zh-CN';
+import localSnkrsWashing from '../pages/SnkrsWashing/local/zh-CN';
 import Electronic from '../pages/Electronic/local/zh-CN';
 
 export default {
@@ -51,4 +53,6 @@ export default {
   ...localeBasicProfile,
   ...SnkrsManage,
   ...Electronic,
+  ...localSnkrsTrack,
+  ...localSnkrsWashing,
 };

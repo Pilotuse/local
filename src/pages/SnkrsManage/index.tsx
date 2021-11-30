@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Statistic, Tag, Breadcrumb, Typography, Space } from '@arco-design/web-react';
 import { IconArrowRise } from '@arco-design/web-react/icon';
-import { clone } from 'lodash';
 import DetailTable from './DetailTable';
 import DetailCharts from './DetailCharts';
 import DrawerBox from './DrawerBox';
@@ -86,10 +85,28 @@ const Loan = () => {
   const [visible, setVisible] = React.useState(false);
   const [modalconfirm, setModalconfirm] = React.useState<ModalconfirmProps>(DEFAULT_COMFIRM);
 
+  // 洗护tag 标签
+  const Recommend = (props: ModalconfirmProps) => {
+    const { size, title, children = null, style } = props;
+    return (
+      <Tag
+        size={size}
+        className={styles['snkrs-recommend']}
+        onClick={() => {
+          setVisible(true);
+          setModalconfirm({ style, title, children });
+        }}
+      >
+        {title}
+      </Tag>
+    );
+  };
+
   return (
     <div className={styles.container}>
       <Breadcrumb style={{ marginBottom: 16 }}>
         <Breadcrumb.Item>球鞋</Breadcrumb.Item>
+        <Breadcrumb.Item>{locale['menu.snkrs.manage']}</Breadcrumb.Item>
       </Breadcrumb>
       <div className={styles.wrapper}>
         <Space direction="vertical" size={24} style={{ width: '100%' }}>
@@ -103,36 +120,11 @@ const Loan = () => {
               heading={6}
             >
               球鞋看板
-              <Tag
-                size="small"
-                className={styles['snkrs-recommend']}
-                onClick={() => {
-                  const confirm = clone(modalconfirm);
-                  setVisible(true);
-                  setModalconfirm({
-                    ...confirm,
-                    title: '每日推荐',
-                  });
-                }}
-              >
-                每日推荐
-              </Tag>
-              <Tag
-                size="small"
-                className={styles['snkrs-recommend']}
-                onClick={() => {
-                  const confirm = clone(modalconfirm);
-                  setVisible(true);
-                  setModalconfirm({
-                    ...confirm,
-                    title: '球鞋洗护',
-                  });
-                }}
-              >
-                球鞋洗护
-              </Tag>
+              <Recommend title="每日推荐" />
+              <Recommend title="球鞋洗护" />
               <Modalconfirm {...modalconfirm} visible={visible} setVisible={setVisible} />
             </Typography.Title>
+
             <Col span={24} className={styles['snkrs-kanban']}>
               <Row>
                 {defaultProps.map((data: DefaultProp, index: number) => {

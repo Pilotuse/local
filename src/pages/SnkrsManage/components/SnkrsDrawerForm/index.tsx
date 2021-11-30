@@ -63,12 +63,7 @@ const formItemLayout = {
     span: 19,
   },
 };
-const noLabelLayout = {
-  wrapperCol: {
-    span: 17,
-    offset: 7,
-  },
-};
+
 
 function Demo() {
   const formRef = useRef();

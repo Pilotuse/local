@@ -53,7 +53,7 @@ function DetailTable() {
     },
     {
       title: locale['menu.snkrs.channel'],
-      dataIndex: 'time',
+      dataIndex: 'times',
     },
     {
       title: locale['menu.snkrs.details'],
@@ -181,7 +181,7 @@ function DetailTable() {
                 placeholder="请选择"
                 showSearch
                 style={{ width: 170 }}
-                onChange={value =>
+                onChange={(value) =>
                   Message.info({ content: `You select ${value}.`, showIcon: true })
                 }
               />
