@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Statistic, Tag, Breadcrumb, Typography, Space } from '@arco-design/web-react';
 import { IconArrowRise } from '@arco-design/web-react/icon';
+import { clone } from 'lodash';
 import DetailTable from './DetailTable';
 import DetailCharts from './DetailCharts';
 import DrawerBox from './DrawerBox';
 import Modalconfirm from './Modalconfirm';
-import { clone } from 'lodash'
 import useLocale from '../../utils/useLocale';
 import { DEFAULT_COMFIRM, ModalconfirmProps } from './constant';
 import styles from './index.module.less';
