@@ -17,12 +17,8 @@ export interface GlobalState {
   theme?: string;
   settings?: typeof defaultSettings;
   userInfo?: {
-    name?: string;
+    username?: string;
     avatar?: string;
-    job?: string;
-    organization?: string;
-    location?: string;
-    email?: string;
   };
   drawerVisible: {
     status: boolean;

@@ -27,7 +27,7 @@
     "beforeEach": false,
   },
   "rules": {
-    "prettier/prettier": ["error", { "trailingComma": "es5", "printWidth": 100 }],
+    "prettier/prettier": "off",
     "linebreak-style": ["error", "unix"],
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "no-case-declarations": 0,

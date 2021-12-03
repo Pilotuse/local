@@ -66,7 +66,7 @@ const formItemLayout = {
 
 
 function Demo() {
-  const formRef = useRef();
+  const formRef: any = useRef();
 
   useEffect(() => {
     formRef.current.setFieldsValue({ rate: 5 });
@@ -141,8 +141,16 @@ function Demo() {
 
         <FormItem
           label="购买价格"
-          field="price"
+          field="buyprice"
           rules={[{ required: true, type: 'number', message: '请输入购买价格' }]}
+        >
+          <Input placeholder="请输入球鞋名称" />
+        </FormItem>
+
+        <FormItem
+          label="球鞋尺码"
+          field="size"
+          rules={[{ required: true, type: 'number', message: '请输入球鞋尺码' }]}
         >
           <Input placeholder="请输入球鞋名称" />
         </FormItem>
@@ -157,7 +165,7 @@ function Demo() {
 
         <FormItem
           label="购买链接"
-          field="source"
+          field="links"
           rules={[{ required: true, message: '请输入购买链接' }]}
         >
           <Input placeholder="请输入购买链接" />
@@ -169,7 +177,7 @@ function Demo() {
 
         <FormItem
           label="适合穿着"
-          field="nickname"
+          field="suitable"
           rules={[{ required: true, type: 'string', message: '请输入适合穿着' }]}
         >
           <Select
@@ -182,8 +190,8 @@ function Demo() {
 
         <FormItem
           label="标签类别"
+          field="label"
           required
-          field="a.b[0].c"
           rules={[
             {
               type: 'array',
@@ -203,7 +211,7 @@ function Demo() {
         <FormItem
           label="球鞋操作"
           required
-          field="a.b[0].c"
+          field="options"
           rules={[
             {
               type: 'array',
@@ -228,7 +236,7 @@ function Demo() {
           <Rate />
         </FormItem>
 
-        <FormItem label="是否售后" field="radio">
+        <FormItem label="是否售后" field="aftersale">
           <Radio.Group>
             <Radio value="1">是</Radio>
             <Radio value="0">否</Radio>
@@ -238,7 +246,7 @@ function Demo() {
         <Form.Item
           label="实拍图"
           field="upload"
-          triggerPropName="fileList"
+          triggerPropName="realpicture"
           initialValue={[
             {
               uid: '-1',
@@ -269,7 +277,7 @@ function Demo() {
 
         <Form.Item
           label="交易截图"
-          field="upload"
+          field="screenshot"
           triggerPropName="fileList"
           initialValue={[
             {
@@ -301,7 +309,7 @@ function Demo() {
 
         <Form.Item
           label="开箱视频"
-          field="upload"
+          field="unpackingvideo"
           triggerPropName="fileList"
           initialValue={[
             {
@@ -332,40 +340,12 @@ function Demo() {
         </Form.Item>
 
         <FormItem
-          label="适合穿着"
-          field="nickname"
-          rules={[{ required: true, type: 'string', message: '请输入适合穿着' }]}
+          label="其他信息"
+          field="other"
+          rules={[{ required: true, type: 'string', message: '请输入...' }]}
         >
           <TextArea placeholder="Please enter ..." style={{ minHeight: 100, resize: 'none' }} />
         </FormItem>
-
-        {/* <FormItem {...noLabelLayout}>
-          <Button
-            onClick={async () => {
-              if (formRef.current) {
-                try {
-                  await formRef.current.validate();
-                  Message.info('校验通过，提交成功！');
-                } catch (_) {
-                  // eslint-disable-next-line no-console
-                  console.log(formRef.current.getFieldsError());
-                  Message.error('校验失败，请检查字段！');
-                }
-              }
-            }}
-            type="primary"
-            style={{ marginRight: 24 }}
-          >
-            提交
-          </Button>
-          <Button
-            onClick={() => {
-              formRef.current.resetFields();
-            }}
-          >
-            重置
-          </Button>
-        </FormItem> */}
       </Form>
     </div>
   );

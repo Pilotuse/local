@@ -2,7 +2,7 @@ import { Form, Input, Checkbox, Link, Button, Space } from '@arco-design/web-rea
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import { IconLock, IconUser } from '@arco-design/web-react/icon';
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
+import service from '../../service'
 import styles from './style/index.module.less';
 import history from '../../history';
 
@@ -13,12 +13,7 @@ export default function LoginForm() {
   const [rememberPassword, setRememberPassword] = useState(false);
 
   function afterLoginSuccess(params) {
-    // 记住密码
-    if (rememberPassword) {
-      localStorage.setItem('loginParams', JSON.stringify(params));
-    } else {
-      localStorage.removeItem('loginParams');
-    }
+    localStorage.setItem('loginParams', JSON.stringify(params));
     // 记录登录状态
     localStorage.setItem('userStatus', 'login');
     // 跳转首页
@@ -27,22 +22,17 @@ export default function LoginForm() {
     });
   }
 
-  function login(params) {
+  const login = async (params) => {
     setErrorMessage('');
     setLoading(true);
-    axios
-      .post('/api/user/login', params)
-      .then(res => {
-        const { status, msg } = res.data;
-        if (status === 'ok') {
-          afterLoginSuccess(params);
-        } else {
-          setErrorMessage(msg || '登录出错，请刷新重试');
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    const { content: { result = {} } } = await service.usersController.login(params)
+    if (result.status === "00000") {
+      const { token, username } = result
+      afterLoginSuccess({ token, username });
+    } else {
+      setErrorMessage('登录出错，请刷新重试');
+    }
+    setLoading(false);
   }
 
   function onSubmitClick() {
@@ -82,9 +72,6 @@ export default function LoginForm() {
           </div>
           <Button type="primary" long onClick={onSubmitClick} loading={loading}>
             登录
-          </Button>
-          <Button type="text" long className={styles['login-form-register-btn']}>
-            注册账号
           </Button>
         </Space>
       </Form>

@@ -9,16 +9,19 @@ import {
   Select,
   Message,
   Popconfirm,
+  Tag,
 } from '@arco-design/web-react';
 import omit from 'lodash/omit';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { IconDownload, IconUpload } from '@arco-design/web-react/icon';
+import { uniq } from 'lodash'
 import { useDispatch } from 'react-redux';
 import useLocale from '../../../utils/useLocale';
 import SnkrsDrawerForm from '../components/SnkrsDrawerForm';
 
-function DetailTable() {
+const DetailTable = (props) => {
+  let { snkrs } = props
   const locale = useLocale();
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
@@ -29,35 +32,67 @@ function DetailTable() {
       .subtract(1, 'day')
       .format('YYYY-MM-DD'),
     endTime: dayjs(new Date()).format('YYYY-MM-DD'),
+    type: []
   });
   const [tableData, setTableData] = useState({ list: [], total: 0 });
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    snkrs = snkrs.map(el => {
+      el.date = dayjs(el.date).format('YYYY-MM-DD')
+      return el
+    }).reverse()
+
+    setTableData({
+      list: snkrs,
+      total: snkrs.length
+    })
+    setSearchParams(params => ({
+      ...params,
+      type: uniq(snkrs.map(_target => _target.type))
+    }));
+  }, [snkrs])
+
   const columns = [
     {
       title: locale['menu.snkrs.name'],
-      dataIndex: 'deviceId',
-      fixed: 'left',
+      dataIndex: 'nickname',
     },
     {
       title: locale['menu.snkrs.model'],
-      dataIndex: 'system',
+      dataIndex: 'type',
     },
     {
       title: locale['menu.snkrs.price'],
-      dataIndex: 'content',
-    },
-    {
-      title: locale['menu.snkrs.buyDate'],
-      dataIndex: 'time',
+      dataIndex: 'price',
+      render: (_col, record) => <span>
+        <span style={{ color: '#FF7D00', fontWeight: 600 }}>¥ </span>
+        {record.price}
+      </span>
     },
     {
       title: locale['menu.snkrs.channel'],
-      dataIndex: 'times',
+      dataIndex: 'size',
+    },
+    {
+      title: locale['menu.snkrs.channel'],
+      dataIndex: 'source',
+    },
+    {
+      title: locale['menu.snkrs.suitable'],
+      dataIndex: 'suitable',
+      render: (_col, record) => (
+        <span>
+          {record.suitable.split('|').map((el, index) => (<Tag key={index} style={{ marginRight: 4 }}>{el}</Tag>))}
+        </span>
+      )
+    },
+    {
+      title: locale['menu.snkrs.buyDate'],
+      dataIndex: 'date',
     },
     {
       title: locale['menu.snkrs.details'],
-      fixed: 'right',
       width: 212,
       render: () => {
         return (
@@ -82,8 +117,7 @@ function DetailTable() {
             </Button>
             <Popconfirm
               title="确认删除本条数据？删除后无法恢复！"
-              onOk={(col, record) => {
-                console.log(col, record)
+              onOk={() => {
                 Message.info({ content: 'ok' });
               }}
               onCancel={() => {
@@ -171,22 +205,24 @@ function DetailTable() {
             initialValues={{
               roomNumber: searchParams.roomNumber,
               time: [searchParams.startTime, searchParams.endTime],
+              type: searchParams.type
             }}
           >
             <Form.Item label={locale['menu.snkrs.buyDate.timeRange']} field="time">
               <DatePicker.RangePicker />
             </Form.Item>
-            <Form.Item label={locale['menu.snkrs.model.selectRange']} field="selectRange">
+            <Form.Item label={locale['menu.snkrs.model.selectRange']} field="type">
               <Select
                 placeholder="请选择"
                 showSearch
+                options={searchParams.type}
                 style={{ width: 170 }}
                 onChange={(value) =>
                   Message.info({ content: `You select ${value}.`, showIcon: true })
                 }
               />
             </Form.Item>
-            <Form.Item label={locale['menu.snkrs.name']} field="name">
+            <Form.Item label={locale['menu.snkrs.name']} field="roomNumber">
               <Input style={{ width: 170 }} />
             </Form.Item>
           </Form>

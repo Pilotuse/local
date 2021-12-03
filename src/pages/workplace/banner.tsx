@@ -21,7 +21,7 @@ function Banner() {
         </Title>
         {userInfo && (
           <Text type="secondary">
-            {userInfo.name}，{userInfo.email}
+            {userInfo.username}
           </Text>
         )}
       </Col>

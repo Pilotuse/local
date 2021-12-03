@@ -1,15 +1,18 @@
-import React from 'react';
-import { Grid, Statistic, Tag, Breadcrumb, Typography, Space } from '@arco-design/web-react';
+import React, { useEffect, useState } from 'react';
+import { Grid, Statistic, Tag, Breadcrumb, Typography, Space, Tabs } from '@arco-design/web-react';
 import { IconArrowRise } from '@arco-design/web-react/icon';
 import DetailTable from './DetailTable';
 import DetailCharts from './DetailCharts';
+import DetailClock from './DetailClock'
 import DrawerBox from './DrawerBox';
 import Modalconfirm from './Modalconfirm';
 import useLocale from '../../utils/useLocale';
 import { DEFAULT_COMFIRM, ModalconfirmProps } from './constant';
+import service from '../../service'
 import styles from './index.module.less';
 
 const { Row, Col } = Grid;
+const TabPane = Tabs.TabPane;
 
 export interface DefaultProp {
   isTag: boolean;
@@ -84,6 +87,33 @@ const Loan = () => {
   const locale = useLocale();
   const [visible, setVisible] = React.useState(false);
   const [modalconfirm, setModalconfirm] = React.useState<ModalconfirmProps>(DEFAULT_COMFIRM);
+  const [kanban, setKanban] = useState([])
+  const [snkrs, setSnkrs] = useState([])
+  const [queryConfig, setQueryConfig] = useState({
+    userData: [],
+    preTitle: '现有', // 前面头部信息
+  })
+
+  const DEFAULT_KEYS = [
+    { key: '1', preTitle: '现有', title: '现有球鞋', component: <DetailTable snkrs={snkrs} /> },
+    { key: '2', preTitle: '计划', title: '计划球鞋', component: <DetailTable snkrs={snkrs} /> },
+  ]
+
+  const querySnkrsKanban = async (params) => {
+    const result = await service.prodController.querySnkrsKanban(params)
+    const { kanban, snkrsList } = result.content.result
+
+    const format = defaultProps.map((el, index) => ({ ...el, value: kanban[Object.keys(kanban)[index]] }))
+    const userData = snkrsList.map(el => ({ type: el.nickname, value: el.price }))
+    setKanban(format)
+    setSnkrs(snkrsList)
+    setQueryConfig({ ...queryConfig, userData })
+  }
+
+  useEffect(() => {
+    querySnkrsKanban({ state: 1 })
+  }, [])
+
 
   // 洗护tag 标签
   const Recommend = (props: ModalconfirmProps) => {
@@ -101,6 +131,11 @@ const Loan = () => {
       </Tag>
     );
   };
+
+  const onTabsChange = (key: string) => {
+    const { preTitle } = DEFAULT_KEYS.filter(el => el.key === key)[0]
+    setQueryConfig({ ...queryConfig, preTitle })
+  }
 
   return (
     <div className={styles.container}>
@@ -127,7 +162,7 @@ const Loan = () => {
 
             <Col span={24} className={styles['snkrs-kanban']}>
               <Row>
-                {defaultProps.map((data: DefaultProp, index: number) => {
+                {kanban.map((data: DefaultProp, index: number) => {
                   return (
                     <Col span={data.span} key={index}>
                       <Statistic
@@ -164,18 +199,18 @@ const Loan = () => {
                 style={{ marginTop: 0, marginBottom: 12, fontSize: 14 }}
                 heading={6}
               >
-                消费趋势
+                {queryConfig.preTitle}消费趋势
               </Typography.Title>
-              <DetailCharts />
+              <DetailCharts snkrs={snkrs} />
             </Col>
             <Col span={12}>
               <Typography.Title
                 style={{ marginTop: 0, marginBottom: 12, fontSize: 14 }}
                 heading={6}
               >
-                消费趋势
+                {queryConfig.preTitle}消费占比
               </Typography.Title>
-              <DetailCharts />
+              {queryConfig.userData.length && <DetailClock queryConfig={queryConfig} />}
             </Col>
           </Row>
         </Col>
@@ -183,12 +218,20 @@ const Loan = () => {
         <Space direction="vertical" size={24} style={{ width: '100%' }}>
           {/* 表单 */}
           <>
-            <Typography.Title style={{ marginTop: 0, marginBottom: 12, fontSize: 14 }} heading={6}>
-              购买列表
-            </Typography.Title>
-            <DetailTable />
+            <Tabs defaultActiveTab='1' onChange={onTabsChange}>
+              {
+                DEFAULT_KEYS.map(el => {
+                  return (
+                    <TabPane key={el.key} title={el.title}>
+                      {el.component}
+                    </TabPane>
+                  )
+                })
+              }
+            </Tabs>
           </>
         </Space>
+
         <DrawerBox />
       </div>
     </div>

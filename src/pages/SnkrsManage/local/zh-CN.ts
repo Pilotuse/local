@@ -23,4 +23,5 @@ export default {
   'menu.snkrs.buyDate.timeRange': '日期',
   'menu.snkrs.channel': '购买渠道',
   'menu.snkrs.details': '详情',
+  'menu.snkrs.suitable': '穿着',
 };

@@ -5,13 +5,12 @@ import { ConfigProvider } from '@arco-design/web-react';
 import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import ReactDOM from 'react-dom';
 import { Router, Switch, Route } from 'react-router-dom';
-import axios from 'axios';
+import { useLocalStorageState } from 'ahooks';
 import rootReducer from './redux';
 import history from './history';
 import PageLayout from './layout/page-layout';
 import { GlobalContext } from './context';
 import './style/index.less';
-import './mock';
 import Login from './pages/login';
 import checkLogin from './utils/checkLogin';
 
@@ -19,6 +18,7 @@ const store = createStore(rootReducer);
 
 function Index() {
   const [locale, setLocale] = useState();
+  const [loginParams] = useLocalStorageState('loginParams', {});
 
   async function fetchLocale(ln?: string) {
     const locale = (await import(`./locale/${ln || 'zh-CN'}`)).default;
@@ -26,11 +26,9 @@ function Index() {
   }
 
   function fetchUserInfo() {
-    axios.get('/api/user/userInfo').then(res => {
-      store.dispatch({
-        type: 'update-userInfo',
-        payload: { userInfo: res.data },
-      });
+    store.dispatch({
+      type: 'update-userInfo',
+      payload: { userInfo: loginParams },
     });
   }
 

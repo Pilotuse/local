@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, Button, Avatar, Typography, Dropdown, Menu, Space } from '@arco-design/web-react';
+import { Tooltip, Button, Typography, Dropdown, Menu, Space } from '@arco-design/web-react';
 import { IconSunFill, IconMoonFill } from '@arco-design/web-react/icon';
 import { useSelector, useDispatch } from 'react-redux';
 import { ReducerState } from '../../redux';
@@ -15,6 +15,7 @@ function Navbar() {
   const userInfo = useSelector((state: ReducerState) => state.global.userInfo);
   const dispatch = useDispatch();
 
+
   function logout() {
     localStorage.setItem('userStatus', 'logout');
     history.push('/user/login');
@@ -23,6 +24,7 @@ function Navbar() {
   function onMenuItemClick(key) {
     if (key === 'logout') {
       logout();
+      localStorage.removeItem('loginParams');
     }
   }
 
@@ -63,9 +65,6 @@ function Navbar() {
         </li>
         {userInfo && (
           <li>
-            <Avatar size={24} style={{ marginRight: 8 }}>
-              <img alt="avatar" src={userInfo.avatar} />
-            </Avatar>
             <Dropdown
               trigger="click"
               droplist={
@@ -74,7 +73,7 @@ function Navbar() {
                 </Menu>
               }
             >
-              <Typography.Text className={styles.username}>{userInfo.name}</Typography.Text>
+              <Typography.Text className={styles.username}>{userInfo.username}</Typography.Text>
             </Dropdown>
           </li>
         )}

@@ -7,7 +7,7 @@
     "no-descending-specificity": null,
     "no-duplicate-selectors": null,
     "font-family-no-missing-generic-family-keyword": null,
-    "block-opening-brace-space-before": "always",
+    "block-opening-brace-space-before": "",
     "declaration-block-trailing-semicolon": null
   }
 }
