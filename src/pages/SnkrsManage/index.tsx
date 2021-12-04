@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Statistic, Tag, Breadcrumb, Typography, Space, Tabs } from '@arco-design/web-react';
+import { Grid, Statistic, Tag, Breadcrumb, Typography, Space, Tabs, Empty } from '@arco-design/web-react';
 import { IconArrowRise } from '@arco-design/web-react/icon';
 import DetailTable from './DetailTable';
 import DetailCharts from './DetailCharts';
@@ -91,7 +91,6 @@ const Loan = () => {
   const [snkrs, setSnkrs] = useState([])
   const [queryConfig, setQueryConfig] = useState({
     userData: [],
-    preTitle: '现有', // 前面头部信息
   })
 
   const DEFAULT_KEYS = [
@@ -101,13 +100,17 @@ const Loan = () => {
 
   const querySnkrsKanban = async (params) => {
     const result = await service.prodController.querySnkrsKanban(params)
-    const { kanban, snkrsList } = result.content.result
-
+    const { kanban = [], snkrsList = [] } = result.content.result
     const format = defaultProps.map((el, index) => ({ ...el, value: kanban[Object.keys(kanban)[index]] }))
     const userData = snkrsList.map(el => ({ type: el.nickname, value: el.price }))
     setKanban(format)
     setSnkrs(snkrsList)
     setQueryConfig({ ...queryConfig, userData })
+  }
+
+  const onTabsChange = (keys: string) => {
+    querySnkrsKanban({ state: keys })
+    setQueryConfig({ ...queryConfig })
   }
 
   useEffect(() => {
@@ -132,10 +135,7 @@ const Loan = () => {
     );
   };
 
-  const onTabsChange = (key: string) => {
-    const { preTitle } = DEFAULT_KEYS.filter(el => el.key === key)[0]
-    setQueryConfig({ ...queryConfig, preTitle })
-  }
+
 
   return (
     <div className={styles.container}>
@@ -199,7 +199,7 @@ const Loan = () => {
                 style={{ marginTop: 0, marginBottom: 12, fontSize: 14 }}
                 heading={6}
               >
-                {queryConfig.preTitle}消费趋势
+                消费趋势
               </Typography.Title>
               <DetailCharts snkrs={snkrs} />
             </Col>
@@ -208,9 +208,10 @@ const Loan = () => {
                 style={{ marginTop: 0, marginBottom: 12, fontSize: 14 }}
                 heading={6}
               >
-                {queryConfig.preTitle}消费占比
+                消费占比
               </Typography.Title>
-              {queryConfig.userData.length && <DetailClock queryConfig={queryConfig} />}
+
+              {queryConfig.userData.length ? <DetailClock queryConfig={queryConfig} /> : <Empty />}
             </Col>
           </Row>
         </Col>

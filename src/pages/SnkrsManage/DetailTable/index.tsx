@@ -38,13 +38,8 @@ const DetailTable = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    snkrs = snkrs.map(el => {
-      el.date = dayjs(el.date).format('YYYY-MM-DD')
-      return el
-    }).reverse()
-
     setTableData({
-      list: snkrs,
+      list: snkrs.reverse(),
       total: snkrs.length
     })
     setSearchParams(params => ({
@@ -52,6 +47,11 @@ const DetailTable = (props) => {
       type: uniq(snkrs.map(_target => _target.type))
     }));
   }, [snkrs])
+
+
+  const ExportColumns = {
+
+  }
 
   const columns = [
     {
@@ -90,6 +90,14 @@ const DetailTable = (props) => {
     {
       title: locale['menu.snkrs.buyDate'],
       dataIndex: 'date',
+      render: (_col, record) => {
+        console.log(record.date);
+        return (
+          <span>
+            {dayjs(record.date).format('YYYY-MM-DD')}
+          </span>
+        )
+      }
     },
     {
       title: locale['menu.snkrs.details'],
