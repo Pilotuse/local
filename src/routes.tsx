@@ -4,7 +4,9 @@ import {
   IconStorage,
   IconThunderbolt,
   IconArchive,
-  IconCommand
+  IconCommand,
+  IconStamp,
+  IconRobot
 } from '@arco-design/web-react/icon';
 
 export const defaultRoute = 'dashboard/workplace';
@@ -55,7 +57,7 @@ export const routes = [
         componentPath: 'SnkrsManage',
       },
       {
-        name: 'menu.snkrs.track',
+        name: '追鞋',
         key: 'snkrs/track',
         componentPath: 'SnkrsTrack',
       },
@@ -71,6 +73,18 @@ export const routes = [
     name: '家居网关',
     key: 'electronic',
     icon: <IconCommand />,
+    componentPath: 'Electronic',
+  },
+  {
+    name: '工资个税',
+    key: 'electronic',
+    icon: <IconRobot />,
+    componentPath: 'Electronic',
+  },
+  {
+    name: '电子合同',
+    key: 'electronic',
+    icon: <IconStamp />,
     componentPath: 'Electronic',
   },
 ];

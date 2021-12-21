@@ -7,5 +7,8 @@ export default {
   },
   querySnkrsKanban(params) {
     return post('/user/transaction', { apiName: 'querySnkrsKanban', bipcode: 'BIP30002', activitycode: 'ACT30002', ...params })
+  },
+  onSnkrsDelete(params) {
+    return post('/user/transaction', { apiName: 'onSnkrsDelete', bipcode: 'BIP30003', activitycode: 'ACT30003', ...params })
   }
 }

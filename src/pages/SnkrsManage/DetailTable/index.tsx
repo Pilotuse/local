@@ -1,57 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import {
-  DatePicker,
+  // DatePicker,
   Form,
   Input,
   Table,
   Button,
   Grid,
   Select,
-  Message,
   Popconfirm,
   Tag,
 } from '@arco-design/web-react';
-import omit from 'lodash/omit';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { IconDownload, IconUpload } from '@arco-design/web-react/icon';
 import { uniq } from 'lodash'
-import { useDispatch } from 'react-redux';
 import useLocale from '../../../utils/useLocale';
-import SnkrsDrawerForm from '../components/SnkrsDrawerForm';
+import DrawerBox from './DrawerBox';
+
+
+
+interface DrawerBoxProps {
+  visible: boolean;
+  title: string;
+  optionsType: boolean;
+}
 
 const DetailTable = (props) => {
-  let { snkrs } = props
+
+  const { snkrs, onDelete, queryConfig, searchParams, setSearchParams, onFormChange } = props
   const locale = useLocale();
-  const [loading, setLoading] = useState(false);
-  const [searchParams, setSearchParams] = useState({
-    page: 1,
-    pageSize: 10,
-    roomNumber: '#3032',
-    startTime: dayjs(new Date())
-      .subtract(1, 'day')
-      .format('YYYY-MM-DD'),
-    endTime: dayjs(new Date()).format('YYYY-MM-DD'),
-    type: []
-  });
   const [tableData, setTableData] = useState({ list: [], total: 0 });
-  const dispatch = useDispatch();
+  const [snkrsType, setSnkrsType] = useState([])
+  const [drawerContext, setDrawerContext] = useState<DrawerBoxProps>({
+    visible: false,
+    title: '',
+    optionsType: false
+  })
+  const [currentRecord, setCurrentRecord] = useState({})
+
+  const drawerEvents = (visible: boolean) => {
+    setDrawerContext({
+      ...drawerContext,
+      visible
+    })
+  }
 
   useEffect(() => {
     setTableData({
-      list: snkrs.reverse(),
+      list: snkrs,
       total: snkrs.length
     })
-    setSearchParams(params => ({
-      ...params,
-      type: uniq(snkrs.map(_target => _target.type))
-    }));
+    setSnkrsType(uniq(snkrs.map(_target => _target.type)))
   }, [snkrs])
 
-
-  const ExportColumns = {
-
-  }
 
   const columns = [
     {
@@ -71,11 +71,11 @@ const DetailTable = (props) => {
       </span>
     },
     {
-      title: locale['menu.snkrs.channel'],
+      title: locale['menu.snkrs.size'],
       dataIndex: 'size',
     },
     {
-      title: locale['menu.snkrs.channel'],
+      title: locale[`menu.snkrs.channel`],
       dataIndex: 'source',
     },
     {
@@ -83,7 +83,12 @@ const DetailTable = (props) => {
       dataIndex: 'suitable',
       render: (_col, record) => (
         <span>
-          {record.suitable.split('|').map((el, index) => (<Tag key={index} style={{ marginRight: 4 }}>{el}</Tag>))}
+          {record.suitable && record.suitable.split('|').map((el, index) => {
+            if (index < 3) {
+              return <Tag key={index} style={{ marginRight: 4 }}>{el}</Tag>
+            }
+            return null
+          })}
         </span>
       )
     },
@@ -91,25 +96,27 @@ const DetailTable = (props) => {
       title: locale['menu.snkrs.buyDate'],
       dataIndex: 'date',
       render: (_col, record) => {
-        console.log(record.date);
+        const data = dayjs(record.date).format('YYYY-MM-DD')
         return (
-          <span>
-            {dayjs(record.date).format('YYYY-MM-DD')}
-          </span>
+          <span>{data !== '2099-12-31' ? data : '-'}</span>
         )
       }
     },
     {
       title: locale['menu.snkrs.details'],
       width: 212,
-      render: () => {
+      render: (_col, record) => {
         return (
           <>
             <Button
               type="text"
               onClick={() => {
-                // eslint-disable-next-line no-use-before-define
-                addSnkrs({ title: '球鞋详情' });
+                setCurrentRecord(record)
+                setDrawerContext({
+                  title: '查看球鞋',
+                  visible: true,
+                  optionsType: true
+                })
               }}
             >
               {locale['menu.watch']}
@@ -117,20 +124,20 @@ const DetailTable = (props) => {
             <Button
               type="text"
               onClick={() => {
-                // eslint-disable-next-line no-use-before-define
-                addSnkrs({ title: `${locale['menu.add']}球鞋`, children: <SnkrsAdd /> });
+                setCurrentRecord(record)
+                setDrawerContext({
+                  title: `${locale['menu.change']}球鞋`,
+                  visible: true,
+                  optionsType: false
+                })
               }}
             >
               {locale['menu.change']}
             </Button>
             <Popconfirm
               title="确认删除本条数据？删除后无法恢复！"
-              onOk={() => {
-                Message.info({ content: 'ok' });
-              }}
-              onCancel={() => {
-                Message.error({ content: 'cancel' });
-              }}
+              position='tr'
+              onOk={() => onDelete({ id: record.id, key: queryConfig.key.state })}
             >
               <Button type="text">{locale['menu.delete']}</Button>
             </Popconfirm>
@@ -140,67 +147,12 @@ const DetailTable = (props) => {
     },
   ];
 
-  const search = params => {
-    setLoading(true);
-    axios
-      .get('/api/feedbackList', {
-        params,
-      })
-      .then(res => {
-        setTableData(res.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  const formatFormValues = values => {
-    const time = values.time || [];
-
-    return {
-      ...omit(values, 'time'),
-      startTime: time[0],
-      endTime: time[1],
-    };
-  };
-
-  const onFormChange = (_value, values) => {
-    setSearchParams(params => ({
-      ...params,
-      ...formatFormValues(values),
-      page: 1,
-    }));
-  };
-
   const onTableChange = ({ current, pageSize }) => {
     setSearchParams(params => ({
       ...params,
       page: current,
       pageSize,
     }));
-  };
-
-  useEffect(() => {
-    search(searchParams);
-  }, [searchParams]);
-
-  const addSnkrs = (props: { title: string; children?: React.ReactNode; componentData?: any }) => {
-    const { title, children, componentData } = props;
-    dispatch({
-      type: 'update-drawerVisible',
-      payload: {
-        drawerVisible: {
-          title,
-          status: true,
-          children,
-          componentData,
-        },
-      },
-    });
-  };
-
-  const SnkrsAdd = () => {
-    return <SnkrsDrawerForm />;
   };
 
   return (
@@ -210,28 +162,21 @@ const DetailTable = (props) => {
           <Form
             layout="inline"
             onChange={onFormChange}
-            initialValues={{
-              roomNumber: searchParams.roomNumber,
-              time: [searchParams.startTime, searchParams.endTime],
-              type: searchParams.type
-            }}
           >
-            <Form.Item label={locale['menu.snkrs.buyDate.timeRange']} field="time">
+            {/* <Form.Item label={locale['menu.snkrs.buyDate.timeRange']} field="time">
               <DatePicker.RangePicker />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item label={locale['menu.snkrs.model.selectRange']} field="type">
               <Select
                 placeholder="请选择"
-                showSearch
-                options={searchParams.type}
+                value={searchParams.type}
+                allowClear
+                options={snkrsType}
                 style={{ width: 170 }}
-                onChange={(value) =>
-                  Message.info({ content: `You select ${value}.`, showIcon: true })
-                }
               />
             </Form.Item>
-            <Form.Item label={locale['menu.snkrs.name']} field="roomNumber">
-              <Input style={{ width: 170 }} />
+            <Form.Item label={locale['menu.snkrs.name']} field="name">
+              <Input style={{ width: 170 }} placeholder="球鞋名称" />
             </Form.Item>
           </Form>
         </Grid.Col>
@@ -239,7 +184,11 @@ const DetailTable = (props) => {
           <Button
             type="text"
             icon={<IconUpload />}
-            onClick={() => addSnkrs({ title: `${locale['menu.add']}球鞋`, children: <SnkrsAdd /> })}
+            onClick={() => setDrawerContext({
+              title: '新增球鞋',
+              visible: true,
+              optionsType: false
+            })}
           >
             {locale['menu.add']}
           </Button>
@@ -250,7 +199,6 @@ const DetailTable = (props) => {
       </Grid.Row>
       <Table
         rowKey="id"
-        loading={loading}
         columns={columns}
         scroll={{ x: 1200 }}
         data={tableData.list}
@@ -262,6 +210,13 @@ const DetailTable = (props) => {
           sizeCanChange: true,
         }}
         onChange={onTableChange}
+      />
+      {/* 抽屉 */}
+      <DrawerBox
+        drawerContext={drawerContext}
+        currentRecord={currentRecord}
+        drawerEvents={drawerEvents}
+        setCurrentRecord={setCurrentRecord}
       />
     </div>
   );
