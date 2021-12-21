@@ -74,7 +74,6 @@ const Demo = (props: any) => {
   const formRef: any = useRef();
 
   // 初始化查询system_dict_itme 表，将所有配置数据查出来 回填
-  console.log(currentRecord);
 
   return (
     <div style={{ maxWidth: 580 }} className={styles.container}>
