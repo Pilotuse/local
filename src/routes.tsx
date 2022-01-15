@@ -6,53 +6,49 @@ import {
   IconArchive,
   IconCommand,
   IconStamp,
-  IconRobot
+  IconRobot,
+  IconCalendar,
+  IconSubscribeAdd
 } from '@arco-design/web-react/icon';
 
 export const defaultRoute = 'dashboard/workplace';
 
 export const routes = [
   {
-    name: 'menu.dashboard.workplace',
+    name: '控制台',
     key: 'dashboard',
     icon: <IconDashboard />,
-    children: [
-      {
-        name: 'menu.dashboard.workplace',
-        key: 'dashboard/workplace',
-        componentPath: 'workplace',
-      },
-    ],
+    componentPath: 'workplace',
   },
   {
-    name: 'menu.loan',
+    name: '借贷',
     key: 'Loan',
     icon: <IconArchive />,
     children: [
       {
-        name: 'menu.loan.kanban',
+        name: '资金看板',
         key: 'loan/kanban',
         componentPath: 'Loan/Fundkanban',
       },
       {
-        name: 'menu.loan.borrow',
+        name: '贷款管理',
         key: 'loan/borrow',
         componentPath: 'Loan/BorrowCenter',
       },
       {
-        name: 'menu.loan.lend',
+        name: '借出管理',
         key: 'loan/lend',
         componentPath: 'Loan/LendCenter',
-      },
+      }
     ],
   },
   {
-    name: 'menu.snkrs',
+    name: '球鞋',
     key: 'snkrs',
     icon: <IconStorage />,
     children: [
       {
-        name: 'menu.snkrs.manage',
+        name: '球鞋管理',
         key: 'snkrs/manage',
         componentPath: 'SnkrsManage',
       },
@@ -64,27 +60,71 @@ export const routes = [
     ],
   },
   {
-    name: 'menu.electronic',
+    name: '电子产品',
     key: 'electronic',
     icon: <IconThunderbolt />,
     componentPath: 'Electronic',
   },
   {
     name: '家居网关',
-    key: 'electronic',
+    key: 'home-gateway',
     icon: <IconCommand />,
-    componentPath: 'Electronic',
+    componentPath: 'HomeGateway',
   },
   {
     name: '工资个税',
-    key: 'electronic',
+    key: 'salary-tax',
     icon: <IconRobot />,
-    componentPath: 'Electronic',
+    children: [
+      {
+        name: '工资',
+        key: 'salary-tax/wages',
+        componentPath: 'SalaryTax',
+        icon: <IconRobot />,
+      },
+      {
+        name: '个税',
+        key: 'salary-tax/raise',
+        componentPath: 'SalaryTax',
+        icon: <IconRobot />,
+      }
+    ],
   },
   {
     name: '电子合同',
-    key: 'electronic',
+    key: 'contract',
     icon: <IconStamp />,
-    componentPath: 'Electronic',
+    componentPath: 'Contract',
+  },
+  {
+    name: '五年规划',
+    key: 'plan',
+    icon: <IconCalendar />,
+    componentPath: 'Plan',
+  },
+  {
+    name: '考研',
+    key: 'postgraduate',
+    icon: <IconSubscribeAdd />,
+    children: [
+      {
+        name: '计划',
+        key: 'postgraduate/plan',
+        componentPath: 'Postgraduate',
+        icon: <IconSubscribeAdd />,
+      },
+      {
+        name: '学校',
+        key: 'postgraduate/plan',
+        componentPath: 'Postgraduate',
+        icon: <IconSubscribeAdd />,
+      },
+      {
+        name: '资料',
+        key: 'postgraduate/plan',
+        componentPath: 'Postgraduate',
+        icon: <IconSubscribeAdd />,
+      },
+    ],
   },
 ];

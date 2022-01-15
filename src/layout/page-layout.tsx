@@ -102,8 +102,13 @@ function PageLayout() {
 
   const flattenRoutes = useMemo(() => getFlattenRoutes() || [], []);
 
+
+  const header = document.querySelector('title')
+
   function onClickMenuItem(key) {
     const currentRoute = flattenRoutes.find(r => r.key === key);
+    header.innerText = `${currentRoute.name}-服务本地生活`
+
     const component = currentRoute.component;
     const preload = component.preload();
     loadingBarRef.current.loading();

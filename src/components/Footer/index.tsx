@@ -10,7 +10,7 @@ export default (props: FooterProps = {}) => {
   const { className, ...restProps } = props;
   return (
     <Footer className={cs(styles.footer, className)} {...restProps}>
-      Family Local life
+      <span className={styles.brand}>Family Local life</span>
     </Footer>
   );
 };

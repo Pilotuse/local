@@ -1,7 +1,15 @@
 import React from 'react';
+import PageHeader from '../component/PageHeader'
 
-const Loan = () => {
-  return <div>借出管理</div>;
+const LendCenter = () => {
+  return (
+    <>
+      <PageHeader
+        title='借出管理中心'
+        subTitle='Lending Management Center'
+      />
+    </>
+  )
 };
 
-export default Loan;
+export default LendCenter;
