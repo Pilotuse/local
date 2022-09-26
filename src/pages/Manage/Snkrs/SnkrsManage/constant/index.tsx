@@ -85,7 +85,12 @@ export const defaultKanbanProps: DefaultProp[] = [
 export const DEFAULT_KEYS = [
   { key: '1', title: '现有球鞋', },
   { key: '2', title: '计划球鞋' },
+  { key: '3', title: '已售球鞋' },
+  // { key: '4', title: '预备售出' },
+  // { key: '6', title: '购买在途', },
+  // { key: '7', title: '出售在途' },
 ]
+
 
 export const DefaultSearchParams = {
   page: 1,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Spin, Tag, Empty } from '@arco-design/web-react';
 import { Chart, Line, Legend, Point, Tooltip, Axis } from 'bizcharts';
 import dayjs from 'dayjs'
-import useChartTheme from '../../../utils/useChartTheme';
+import useChartTheme from '../../../../../utils/useChartTheme';
 import styles from './index.module.less'
 
 function ReportStuckRate(props: any) {

@@ -11,9 +11,9 @@ import {
   Tag,
 } from '@arco-design/web-react';
 import dayjs from 'dayjs';
-import { IconDownload, IconUpload } from '@arco-design/web-react/icon';
+import { IconDownload, IconPlus } from '@arco-design/web-react/icon';
 import { uniq } from 'lodash'
-import useLocale from '../../../utils/useLocale';
+import useLocale from '../../../../../utils/useLocale';
 import DrawerBox from './DrawerBox';
 
 
@@ -24,9 +24,21 @@ interface DrawerBoxProps {
   optionsType: boolean;
 }
 
+const SNKRS_STATE = {
+  "1": '已购买',
+  "2": '预备购买',
+  "3": "已售出",
+  "4": "预备售出",
+  "5": "售出中",
+  "6": "购买在途",
+  "7": "出售在途"
+}
+
 const DetailTable = (props) => {
 
-  const { snkrs, onDelete, queryConfig, searchParams, setSearchParams, onFormChange } = props
+  const { snkrs, onDelete, queryConfig, searchParams, setSearchParams, onFormChange, onQuery, tabKey } = props
+
+
   const locale = useLocale();
   const [tableData, setTableData] = useState({ list: [], total: 0 });
   const [snkrsType, setSnkrsType] = useState([])
@@ -52,6 +64,20 @@ const DetailTable = (props) => {
     setSnkrsType(uniq(snkrs.map(_target => _target.type)))
   }, [snkrs])
 
+  const stateFromColumns = () => {
+    if (tabKey === "3") {
+      return {
+        title: locale['menu.snkrs.saleprice'],
+        dataIndex: 'saleprice',
+        render: (_col, record) => <span>
+          <span style={{ color: '#FF7D00', fontWeight: 600 }}>¥ </span>
+          <span style={{ color: record?.price > record?.saleprice && 'red' }}>{record.saleprice}</span>
+        </span>
+      }
+    }
+    return {}
+  }
+
 
   const columns = [
     {
@@ -61,6 +87,7 @@ const DetailTable = (props) => {
     {
       title: locale['menu.snkrs.model'],
       dataIndex: 'type',
+      render: (_col, record) => <span>{record.type?.split(',')?.join('/')}</span>
     },
     {
       title: locale['menu.snkrs.price'],
@@ -70,9 +97,17 @@ const DetailTable = (props) => {
         {record.price}
       </span>
     },
+    stateFromColumns(),
     {
       title: locale['menu.snkrs.size'],
       dataIndex: 'size',
+    },
+    {
+      title: locale[`menu.snkrs.state`],
+      dataIndex: 'state',
+      render: (_col, record) => <span>
+        {SNKRS_STATE[record.state]}
+      </span>
     },
     {
       title: locale[`menu.snkrs.channel`],
@@ -83,7 +118,7 @@ const DetailTable = (props) => {
       dataIndex: 'suitable',
       render: (_col, record) => (
         <span>
-          {record.suitable && record.suitable.split('|').map((el, index) => {
+          {record.suitable && record.suitable.split(',').map((el, index) => {
             if (index < 3) {
               return <Tag key={index} style={{ marginRight: 4 }}>{el}</Tag>
             }
@@ -183,7 +218,7 @@ const DetailTable = (props) => {
         <Grid.Col span={4} style={{ textAlign: 'right' }}>
           <Button
             type="text"
-            icon={<IconUpload />}
+            icon={<IconPlus />}
             onClick={() => setDrawerContext({
               title: '新增球鞋',
               visible: true,
@@ -199,7 +234,7 @@ const DetailTable = (props) => {
       </Grid.Row>
       <Table
         rowKey="id"
-        columns={columns}
+        columns={columns as any}
         scroll={{ x: 1200 }}
         data={tableData.list}
         pagination={{
@@ -213,7 +248,10 @@ const DetailTable = (props) => {
       />
       {/* 抽屉 */}
       <DrawerBox
+        tabKey={tabKey}
+        onQuery={onQuery}
         drawerContext={drawerContext}
+        setDrawerContext={setDrawerContext}
         currentRecord={currentRecord}
         drawerEvents={drawerEvents}
         setCurrentRecord={setCurrentRecord}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Breadcrumb } from '@arco-design/web-react';
 import styles from './index.module.less';
-import useLocale from '../../utils/useLocale';
+import useLocale from '../../../../utils/useLocale';
 
 export default function index() {
   const locale = useLocale();

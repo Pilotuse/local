@@ -25,7 +25,8 @@ export default function LoginForm() {
   const login = async (params) => {
     setErrorMessage('');
     setLoading(true);
-    const { content: { result = {} } } = await service.usersController.login(params)
+    const response = await service.usersController.login(params)
+    const { content: { result = {} } } = response as any
     if (result.status === "00000") {
       const { token, username } = result
       afterLoginSuccess({ token, username });

@@ -33,25 +33,21 @@ service.interceptors.response.use(response => {
 
   if (error?.message === 'Network Error') {
     Message.error("网络错误，请稍后重试！");
-    return Promise.reject(error)
+    return Promise.reject(error?.message)
   }
-  // eslint-disable-next-line no-console
-  console.log(history);
   const { status = '400' } = error?.response
   switch (status) {
     case 400:
       Message.error("参数信息有误");
-      history.createHref("/login");
+      history.push("/login");
       break;
     case 401:
       Message.error("用户登录令牌过期，请重新登录");
-
-
-      history.createHref("/login");
+      history.push("/login");
       break;
     case 302:
       Message.error("用户未登录");
-      history.createHref("/login");
+      history.push("/login");
       break;
     case 403:
       Message.error('数据请求失败，请稍后重试！');

@@ -7,8 +7,8 @@ import DetailTable from './DetailTable';
 import DetailCharts from './DetailCharts';
 import DetailClock from './DetailClock'
 import Modalconfirm from './Modalconfirm';
-import useLocale from '../../utils/useLocale';
-import service from '../../service'
+import useLocale from '../../../../utils/useLocale';
+import service from '../../../../service'
 import styles from './index.module.less';
 
 const { Row, Col } = Grid;
@@ -26,7 +26,9 @@ const Loan = () => {
 
   // 请求数据
   const onQuery = async (params) => {
-    const result = await service.prodController.querySnkrsKanban(params)
+    console.log(params);
+    
+    const result = await service.prodController.querySnkrsKanban(params) as any
     const { kanban = [], snkrsList = [] } = result.content.result
     const format = defaultKanbanProps.map((el, index) => ({ ...el, value: kanban[Object.keys(kanban)[index]] }))
     const userData = snkrsList.map(el => ({ type: el.nickname, value: el.price }))
@@ -37,7 +39,7 @@ const Loan = () => {
 
   // 删除table中的数据
   const onDelete = async ({ id, key }) => {
-    const { content: { result } } = await service.prodController.onSnkrsDelete({ id })
+    const { content: { result } } = await service.prodController.onSnkrsDelete({ id })  as any
     if (result.code === '00000') {
       onQuery({ state: key })
       Message.success(result.msg)
@@ -179,6 +181,7 @@ const Loan = () => {
                     <TabPane key={el.key} title={el.title}>
                       <DetailTable
                         snkrs={snkrs}
+                        tabKey={el.key}
                         queryConfig={queryConfig}
                         onDelete={onDelete}
                         onQuery={onQuery}

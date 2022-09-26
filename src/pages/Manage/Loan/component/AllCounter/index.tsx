@@ -2,9 +2,9 @@ import React from 'react';
 import { Typography, Grid, Statistic, Space } from '@arco-design/web-react';
 import { IconHome } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
-import useLocale from '../../../../utils/useLocale';
+import useLocale from '../../../../../utils/useLocale';
 import styles from './style/index.module.less';
-import { ReducerState } from '../../../../redux';
+import { ReducerState } from '../../../../../redux';
 
 const { Title, Text } = Typography;
 const { Row, Col } = Grid;

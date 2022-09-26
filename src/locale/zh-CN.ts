@@ -5,10 +5,10 @@ import locale403 from '../pages/403/locale/zh-CN';
 import locale404 from '../pages/404/locale/zh-CN';
 import locale500 from '../pages/500/locale/zh-CN';
 import localeError from '../pages/error/locale/zh-CN';
-import localLoan from '../pages/Loan/local/zh-CN';
-import SnkrsManage from '../pages/SnkrsManage/local/zh-CN';
-import localSnkrsTrack from '../pages/SnkrsTrack/local/zh-CN';
-import Electronic from '../pages/Electronic/local/zh-CN';
+import localLoan from '../pages/Manage/Loan/local/zh-CN';
+import SnkrsManage from '../pages/Manage/Snkrs/SnkrsManage/local/zh-CN';
+import localSnkrsTrack from '../pages/Manage/Snkrs/SnkrsTrack/local/zh-CN';
+import Electronic from '../pages/Manage/Electronic/local/zh-CN';
 
 export default {
   'menu.dashboard': '仪表盘',

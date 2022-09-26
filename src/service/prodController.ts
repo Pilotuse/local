@@ -10,5 +10,8 @@ export default {
   },
   onSnkrsDelete(params) {
     return post('/user/transaction', { apiName: 'onSnkrsDelete', bipcode: 'BIP30003', activitycode: 'ACT30003', ...params })
+  },
+  updateSnkrsDate: (params) => {
+    return post('/user/transaction', { apiName: 'updateSnkrsDate', bipcode: 'BIP30004', activitycode: 'ACT30004', ...params })
   }
 }
